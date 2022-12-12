@@ -1,0 +1,79 @@
+{
+	"name": "ytt-lint",
+	"displayName": "ytt lint",
+	"publisher": "phil9909",
+	"homepage": "https://github.com/SAP/ytt-lint/blob/master/README.md",
+	"bugs": {
+		"url": "https://github.com/SAP/ytt-lint/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/SAP/ytt-lint"
+	},
+	"description": "ytt lint validates ytt-templates and plain yaml-files. It is designed for Kubernetes artifacts, but works with other yaml-files.",
+	"version": "0.3.1",
+	"engines": {
+		"vscode": "^1.41.0"
+	},
+	"categories": [
+		"Linters"
+	],
+	"icon": "icon/icon.png",
+	"galleryBanner": {
+		"color": "#F0AB00",
+		"theme": "light"
+	},
+	"license": "Apache-2.0",
+	"activationEvents": [
+		"onCommand:extension.pullSchemaK8S",
+		"onCommand:extension.importSchema",
+		"onLanguage:yaml",
+		"onLanguage:ytt"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.pullSchemaK8S",
+				"title": "ytt-lint: Pull crd schemas from Kubernetes cluster"
+			},
+			{
+				"command": "extension.importSchema",
+				"title": "ytt-lint: Import crd schemas from current file or folder"
+			}
+		],
+		"menus": {
+			"explorer/context": [
+				{
+					"when": "explorerResourceIsFolder || resourceLangId == yaml || resourceLangId == ytt",
+					"command": "extension.importSchema"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"test": "node ./out/test/runTest.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^7.0.1",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.41.0",
+		"@types/yaml": "^1.9.7",
+		"@typescript-eslint/eslint-plugin": "^2.18.0",
+		"@typescript-eslint/parser": "^2.18.0",
+		"eslint": "^6.8.0",
+		"glob": "^7.1.6",
+		"mocha": "^8.1.0",
+		"typescript": "^3.7.5",
+		"vscode-test": "^1.3.0"
+	},
+	"dependencies": {
+		"yaml": "1.10.0"
+	}
+}
